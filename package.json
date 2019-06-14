@@ -1,0 +1,28 @@
+{
+  "name": "escpos-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/index.js",
+  "typings": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "tsc -w "
+  },
+  "keywords": [
+    "esc",
+    "typesript",
+    "printer"
+  ],
+  "author": "tongjian_gao@163.com",
+  "license": "ISC",
+  "dependencies": {
+    "iconv-lite": "^0.4.24",
+    "mutable-buffer": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.8"
+  }
+}
