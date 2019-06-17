@@ -1,4 +1,4 @@
-export declare type ControlType = "lf" | "glf" | "ff" | "cr" | "ht" | "vt";
+export declare type ControlType = "LF" | "GLF" | "FF" | "CR" | "HT" | "VT";
 export declare type StyleType = "B" | "I" | "U" | "U2" | "BI" | "BIU" | "BIU2" | "BU" | "NORMAL";
 export declare type FontType = "A" | "B" | "C";
 export declare type BarcodeFontType = "A" | "B";
@@ -48,6 +48,6 @@ declare class Printer {
     barcode: (code: string, type?: BarcodeType | null, options?: IBarcodeOptions, ...args: any[]) => Printer;
     qrcode: (code: string, version?: number, level?: "L" | "M" | "Q" | "H", size?: number) => Printer;
     constructor(adapter: any, options?: PrinterOptions);
-    table(columns: any, data: any, widths: any): void;
+    table(columns: (string | number)[][], widths?: number[], control?: ControlType[]): this;
 }
 export default Printer;

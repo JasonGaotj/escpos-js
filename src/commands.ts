@@ -20,10 +20,10 @@ var _: { [commandName: string]: any } = {
 _.FEED_CONTROL_SEQUENCES = {
   CTL_LF: "\x0a", // Print and line feed
   CTL_GLF: "\x4a\x00", // Print and feed paper (without spaces between lines)
-  CTL_FF: "\x0c", // Form feed
-  CTL_CR: "\x0d", // Carriage return
-  CTL_HT: "\x09", // Horizontal tab
-  CTL_VT: "\x0b" // Vertical tab
+  CTL_FF: "\x0c", // Form feed ; 打印并走纸到下一标签
+  CTL_CR: "\x0d", // Carriage return 打印并回车
+  CTL_HT: "\x09", // Horizontal tab 水平
+  CTL_VT: "\x0b" // Vertical tab 垂直
 };
 
 _.CHARACTER_SPACING = {

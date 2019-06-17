@@ -26,19 +26,24 @@ const receive = (data = {}) => {
       .align("lt")
       .text("这里是打印机描述")
       .marginBottom(10)
-      .print("\x1B\x44\x12\x19\x24\x00")
-      .pureText("商品名称")
-      .control("HT")
-      .pureText("数量")
-      .control("HT")
-      .pureText("金额")
-      .control("LF")
-      .pureText("泰国金枕榴莲")
-      .control("HT")
-      .pureText("5")
-      .control("HT")
-      .pureText("$120")
-      .control("LF")
+      // .print("\x1B\x44\x12\x19\x24\x00")
+      // .pureText("商品名称")
+      // .control("HT")
+      // .pureText("数量")
+      // .control("HT")
+      // .pureText("金额")
+      // .control("LF")
+      // .pureText("泰国金枕榴莲")
+      // .control("HT")
+      // .pureText("5")
+      // .control("HT")
+      // .pureText("$120")
+      // .control("LF")
+      .table([
+        ["商品名称", "规格", "数量", "金额"],
+        ["泰国金枕榴莲", "4kg", "2", "￥120"],
+        ["北京水蜜桃", "500g", "1", "￥22.5"]
+      ])
       .text("_______________________________________")
       .marginBottom(10)
       .barcode("0201902018", "CODE39", {
@@ -59,4 +64,4 @@ console.log("*************");
 console.log(str);
 console.log("*************");
 
-const str2 = receive();
+module.exports = receive;

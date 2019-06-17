@@ -10,7 +10,7 @@ import Promiseify from "./promiseify";
 const DEFAULT_INITIAL_SIZE = 1024;
 const DEFAULT_BLOCK_SIZE = 1024;
 
-export type ControlType = "lf" | "glf" | "ff" | "cr" | "ht" | "vt";
+export type ControlType = "LF" | "GLF" | "FF" | "CR" | "HT" | "VT";
 export type StyleType =
   | "B"
   | "I"
@@ -106,10 +106,38 @@ class Printer {
     this._model = null;
   }
 
-  // 制表
-  table(columns, data, widths) {
+  // table
+  table(
+    columns: (string | number)[][],
+    widths?: number[],
+    control?: ControlType[]
+  ) {
+    if (!Array.isArray(columns)) {
+      throw new Error("columns must is a array!");
+    }
+    if (!columns.every(arr => Array.isArray(arr))) {
+      throw new Error("columns item must is a array!");
+    }
     this.buffer.write(_.TAB_FORMAT.HORIZONTAL);
-    const columnsLength = columns.length;
+    if (Array.isArray(widths)) {
+      widths.forEach(n => this.buffer.writeUInt8(n));
+    } else {
+      const len = columns[0].length;
+      Array.from({ length: len }).forEach((_, i) =>
+        this.buffer.writeUInt8(i + 1)
+      );
+    }
+    this.buffer.writeUInt8(0);
+
+    columns.forEach(cols => {
+      cols.forEach((str, idx) => {
+        const isLast = cols.length === idx - 1;
+        this.pureText(String(str)).control(
+          (control && control[idx]) || (isLast ? "LF" : "HT")
+        );
+      });
+    });
+    return this;
   }
 }
 
