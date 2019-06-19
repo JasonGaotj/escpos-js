@@ -2,4 +2,5 @@ import Printer from "./printer";
 import Console from "./console";
 export { Printer };
 export { Console };
-export default Printer;
+declare const printerOpen: (callback: (printer: Printer) => Printer) => Printer;
+export default printerOpen;

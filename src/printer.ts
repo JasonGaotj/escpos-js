@@ -73,6 +73,7 @@ class Printer {
   public beep: (n, t) => Printer;
   public flush: (callback: void) => Printer;
   public cut: (part: boolean, feed?: number) => Printer;
+  public open: (callback: () => void) => Printer;
   public close: (callback: void, options) => Printer;
   public color: (color?: 0 | 1) => Printer;
 
@@ -106,12 +107,20 @@ class Printer {
     this._model = null;
   }
 
+  /**
+   * 初始化
+   */
+  init(): Printer {
+    this.buffer.write(_.HARDWARE.HW_INIT);
+    return this;
+  }
+
   // table
   table(
     columns: (string | number)[][],
     widths?: number[],
     control?: ControlType[]
-  ) {
+  ): Printer {
     if (!Array.isArray(columns)) {
       throw new Error("columns must is a array!");
     }
@@ -124,14 +133,14 @@ class Printer {
     } else {
       const len = columns[0].length;
       Array.from({ length: len }).forEach((_, i) =>
-        this.buffer.writeUInt8(i + 1)
+        this.buffer.writeUInt8((i + 1) * 10)
       );
     }
     this.buffer.writeUInt8(0);
 
     columns.forEach(cols => {
       cols.forEach((str, idx) => {
-        const isLast = cols.length === idx - 1;
+        const isLast = cols.length - 1 === idx;
         this.pureText(String(str)).control(
           (control && control[idx]) || (isLast ? "LF" : "HT")
         );
@@ -492,8 +501,10 @@ Printer.prototype.barcode = function(code, type, options) {
     parityBit = utils.getParityBit(code);
   }
   if (type == "CODE128" || type == "CODE93") {
+    console.log("action");
     codeLength = utils.codeLength(code);
   }
+  console.log(`barcode: ${type} - ${codeLength} - ${code}`);
   this.buffer.write(
     codeLength + code + (includeParity ? parityBit : "") + "\x00"
   ); // Allow to skip the parity byte
@@ -709,6 +720,19 @@ Printer.prototype.close = function(callback, options) {
   var self = this;
   return this.flush(function() {
     self.adapter.close(callback, options);
+  });
+};
+
+/**
+ * [open description]
+ * @param  {Function} callback [description]
+ * @param  {[type]}   options  [description]
+ * @return {[type]}            [description]
+ */
+Printer.prototype.open = function(callback) {
+  var self = this;
+  return this.flush(function() {
+    self.adapter.open(callback);
   });
 };
 

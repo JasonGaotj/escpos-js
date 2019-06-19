@@ -43,11 +43,13 @@ declare class Printer {
     beep: (n: any, t: any) => Printer;
     flush: (callback: void) => Printer;
     cut: (part: boolean, feed?: number) => Printer;
+    open: (callback: () => void) => Printer;
     close: (callback: void, options: any) => Printer;
     color: (color?: 0 | 1) => Printer;
     barcode: (code: string, type?: BarcodeType | null, options?: IBarcodeOptions, ...args: any[]) => Printer;
     qrcode: (code: string, version?: number, level?: "L" | "M" | "Q" | "H", size?: number) => Printer;
     constructor(adapter: any, options?: PrinterOptions);
-    table(columns: (string | number)[][], widths?: number[], control?: ControlType[]): this;
+    init(): Printer;
+    table(columns: (string | number)[][], widths?: number[], control?: ControlType[]): Printer;
 }
 export default Printer;
