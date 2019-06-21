@@ -115,6 +115,13 @@ class Printer {
     return this;
   }
 
+  spacingCN(left: number = 0, right: number = 0): Printer {
+    this.buffer.write(_.TEXT_FORMAT.TXT_CN_SPACE);
+    this.buffer.writeUInt8(left);
+    this.buffer.writeUInt8(right);
+    return this
+  }
+
   // table
   table(
     columns: (string | number)[][],
@@ -373,15 +380,20 @@ Printer.prototype.style = function(type) {
 Printer.prototype.size = function(width, height) {
   if (2 >= width && 2 >= height) {
     this.buffer.write(_.TEXT_FORMAT.TXT_NORMAL);
+    this.buffer.write(_.TEXT_FORMAT.TXT_CN_NORMAL);
     if (2 == width && 2 == height) {
-      this.buffer.write(_.TEXT_FORMAT.TXT_4SQUARE);
+      this.buffer.write(_.TEXT_FORMAT.TXT_CN_4SQUARE);
+      this.buffer.write(_.TEXT_FORMAT.TXT_CN_4SQUARE);
     } else if (1 == width && 2 == height) {
       this.buffer.write(_.TEXT_FORMAT.TXT_2HEIGHT);
+      this.buffer.write(_.TEXT_FORMAT.TXT_CN_2HEIGHT);
     } else if (2 == width && 1 == height) {
       this.buffer.write(_.TEXT_FORMAT.TXT_2WIDTH);
+      this.buffer.write(_.TEXT_FORMAT.TXT_CN_2WIDTH);
     }
   } else {
     this.buffer.write(_.TEXT_FORMAT.TXT_CUSTOM_SIZE(width, height));
+    this.buffer.write(_.TEXT_FORMAT.TXT_CN_CUSTOM_SIZE(width, height));
   }
   return this;
 };

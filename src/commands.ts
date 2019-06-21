@@ -86,12 +86,25 @@ _.TEXT_FORMAT = {
   TXT_2WIDTH: "\x1b\x21\x20", // Double width text
   TXT_4SQUARE: "\x1b\x21\x30", // Double width & height text
 
+  TXT_CN_NORMAL: "\x1c\x21\x00", // Normal text
+  TXT_CN_2HEIGHT: "\x1c\x21\x10", // Double height text
+  TXT_CN_2WIDTH: "\x1c\x21\x20", // Double width text
+  TXT_CN_4SQUARE: "\x1c\x21\x30", // Double width & height text
+
   TXT_CUSTOM_SIZE: function(width, height) {
     // other sizes
     var widthDec = (width - 1) * 16;
     var heightDec = height - 1;
     var sizeDec = widthDec + heightDec;
     return "\x1d\x21" + String.fromCharCode(sizeDec);
+  },
+
+  TXT_CN_CUSTOM_SIZE: function(width, height) {
+    // other sizes
+    var widthDec = (width - 1) * 16;
+    var heightDec = height - 1;
+    var sizeDec = widthDec + heightDec;
+    return "\x1c\x21" + String.fromCharCode(sizeDec);
   },
 
   TXT_HEIGHT: {
@@ -129,7 +142,9 @@ _.TEXT_FORMAT = {
 
   TXT_ALIGN_LT: "\x1b\x61\x00", // Left justification
   TXT_ALIGN_CT: "\x1b\x61\x01", // Centering
-  TXT_ALIGN_RT: "\x1b\x61\x02" // Right justification
+  TXT_ALIGN_RT: "\x1b\x61\x02", // Right justification
+
+  TXT_CN_SPACE: "\x1c\x53"
 };
 
 /**
